@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { OpenStatusBadge } from "@/components/ui/OpenStatusBadge";
 
-const mapEmbedSrc = `https://www.google.com/maps?q=${business.geo.lat},${business.geo.lng}&z=17&output=embed`;
+// Query by name + address (not raw lat/lng) so the embed resolves to the
+// actual "ames coffee" listing — a coordinate-only query can drop the pin
+// near the nearest intersection instead of on the storefront, and its
+// built-in "Open in Maps" link would carry that same imprecise query along.
+const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
+  `${business.name}, ${business.address.full}`
+)}&z=17&output=embed`;
 
 const goodToKnow = [
   business.amenities.seating,

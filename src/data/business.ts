@@ -30,8 +30,11 @@ export const business = {
     tel: "+61401663924",
   },
 
+  // Uses the Maps "search" action (not a place/CID URL) so it reliably opens
+  // with the "ames coffee" name and pin, rather than falling back to raw
+  // coordinates if a stale CID fails to resolve.
   googleMapsUrl:
-    "https://www.google.com/maps/place/ames+coffee/@-27.4258202,153.0378614,17z/data=!4m6!3m5!1s0x6b9159dd5fb68f85:0xae2609d04e772b0e!8m2!3d-27.4258202!4d153.0378614",
+    "https://www.google.com/maps/search/?api=1&query=ames+coffee+63+McLennan+St%2C+Albion+QLD+4010%2C+Australia",
 
   rating: {
     value: 5.0,
