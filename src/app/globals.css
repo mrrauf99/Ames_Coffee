@@ -127,8 +127,12 @@ body {
   animation: ames-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Kept short and lightly delayed: this wraps the LCP image, and previously ran
+   longer than every staggered text element beside it (1.1s + 180ms delay =
+   finished last, at 1280ms) — the photo read as the slowest thing in the
+   hero even though the file itself decodes in well under 150ms. */
 .hero-frame {
-  animation: ames-curtain 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: ames-curtain 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .marquee-track {

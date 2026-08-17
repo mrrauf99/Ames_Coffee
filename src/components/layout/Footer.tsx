@@ -60,8 +60,33 @@ export function Footer() {
       </div>
 
       <div className="relative mt-8 border-t border-cream/10 px-6 py-4 text-center text-xs text-cream/60 sm:px-8 lg:px-10">
-        © {new Date().getFullYear()} {business.name}. Made on McLennan Street,
-        Albion.
+        <p>
+          © {new Date().getFullYear()} {business.name}. Made on McLennan
+          Street, Albion.
+        </p>
+        <p className="mt-1.5 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1">
+          <span>Site by Abdul Rauf</span>
+          <span aria-hidden className="text-cream/30">
+            ·
+          </span>
+          <a
+            href="mailto:itxrauf99@gmail.com"
+            className="underline decoration-cream/25 underline-offset-2 transition-colors hover:text-coral hover:decoration-coral"
+          >
+            Email
+          </a>
+          <span aria-hidden className="text-cream/30">
+            ·
+          </span>
+          <a
+            href="https://wa.me/923276428640"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-cream/25 underline-offset-2 transition-colors hover:text-coral hover:decoration-coral"
+          >
+            WhatsApp
+          </a>
+        </p>
       </div>
     </footer>
   );

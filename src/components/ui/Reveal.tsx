@@ -27,8 +27,14 @@ const shown: Record<RevealVariant, string> = {
   curtain: "opacity-100 [clip-path:inset(0_0_0_0)]",
 };
 
-const TRANSITION =
-  "transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]";
+const TRANSITION: Record<RevealVariant, string> = {
+  rise: "transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+  // Curtain only ever wraps photography (Story, Visit). 900ms held the fully
+  // in-view, already-loaded image behind a clip-path for most of a second
+  // after scrolling to it — the photo read as slow to appear even though it
+  // had nothing left to load.
+  curtain: "transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+};
 
 export function Reveal({
   children,
@@ -48,7 +54,7 @@ export function Reveal({
     return (
       <div ref={ref} className={`relative ${className}`}>
         <div
-          className={`absolute inset-0 ${TRANSITION} ${
+          className={`absolute inset-0 ${TRANSITION.curtain} ${
             isInView ? shown.curtain : hidden.curtain
           }`}
           style={{ transitionDelay: `${delay}ms` }}
@@ -62,7 +68,7 @@ export function Reveal({
   return (
     <div
       ref={ref}
-      className={`${TRANSITION} ${
+      className={`${TRANSITION[variant]} ${
         isInView ? shown[variant] : hidden[variant]
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
