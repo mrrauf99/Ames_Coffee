@@ -1,8 +1,6 @@
-// The rose-and-stem motif traced from the hand-painted sign above the hatch and
-// the header of the shop's own printed menu artwork.
-// It is the one piece of ames' own drawing the site reuses, so it earns its
-// place as a marker rather than as decoration: it appears where the page is
-// standing in for something physical (the board, the sign, the footer plate).
+// Traced from ames' own hand-painted sign and menu artwork — the one piece of
+// their drawing the site reuses, so it marks places standing in for something
+// physical (the board, the sign, the footer plate).
 
 type RoseProps = {
   className?: string;

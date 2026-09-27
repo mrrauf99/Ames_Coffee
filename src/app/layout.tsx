@@ -19,7 +19,6 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 // TODO: replace with the confirmed production domain once purchased.
-// This is a working placeholder, not a live URL.
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://amescoffee.com.au";
 
 export const metadata: Metadata = {
@@ -28,8 +27,7 @@ export const metadata: Metadata = {
     default: business.name,
     template: `%s | ${business.name}`,
   },
-  description:
-    "ames coffee is a walk-up coffee window on McLennan St, Albion. Rated 5.0★ from 45 reviews. Espresso, Japanese matcha and seasonal juice, open every day from 6am.",
+  description: `ames coffee is a walk-up coffee window on McLennan St, Albion. Rated ${business.rating.value.toFixed(1)}★ from ${business.rating.displayCount} reviews. Espresso, Japanese matcha and seasonal juice, open every day from 6am.`,
   keywords: [
     "coffee Albion",
     "coffee shop Albion Brisbane",
@@ -39,8 +37,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: `${business.name} | Specialty Coffee & Matcha in Albion, Brisbane`,
-    description:
-      "A walk-up coffee window on McLennan St, Albion. Rated 5.0★ from 45 reviews. Espresso, Japanese matcha and seasonal juice, open every day from 6am.",
+    description: `A walk-up coffee window on McLennan St, Albion. Rated ${business.rating.value.toFixed(1)}★ from ${business.rating.displayCount} reviews. Espresso, Japanese matcha and seasonal juice, open every day from 6am.`,
     url: SITE_URL,
     siteName: business.name,
     images: [{ url: "/images/hero-storefront.jpg", width: 1200, height: 1600 }],
@@ -97,8 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <script
           type="application/ld+json"
-          // Static, developer-authored schema data only (never user input).
-          // The "<" escape below guards against "</script>" breaking out of the tag.
+          // Escapes "<" so a literal "</script>" in the JSON can't break out of the tag.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
           }}

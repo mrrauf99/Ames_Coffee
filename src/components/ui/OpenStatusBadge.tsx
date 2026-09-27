@@ -8,10 +8,8 @@ function subscribe(callback: () => void) {
   return () => clearInterval(id);
 }
 
-// useSyncExternalStore requires getSnapshot to return a stable reference when
-// nothing has actually changed, or it re-renders forever. getOpenStatus()
-// builds a fresh object every call, so cache it and only replace the
-// reference when the computed status actually differs.
+// getOpenStatus() builds a fresh object every call; useSyncExternalStore needs
+// a stable reference when nothing changed, or it re-renders forever.
 let cachedSnapshot: OpenStatus | null = null;
 let cachedKey: string | null = null;
 
@@ -25,9 +23,8 @@ function getSnapshot(): OpenStatus {
   return cachedSnapshot;
 }
 
-// The real status depends on the visitor's clock, which isn't known during
-// server rendering, so return null there and on the first client render so
-// hydration matches, then useSyncExternalStore swaps in the live value.
+// Status depends on the visitor's clock, unknown during SSR; return null there
+// and on first client render so hydration matches, then swap in the live value.
 function getServerSnapshot(): OpenStatus | null {
   return null;
 }

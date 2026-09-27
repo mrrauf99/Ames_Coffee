@@ -39,15 +39,23 @@ export function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden bg-cream">
-      {/* Ambient wash lifted from the pastel shapes on ames' printed menu. Kept
-          well below the photography so it reads as warmth, not as a gradient. */}
+      {/* Ambient wash from ames' printed menu: an irregular silhouette with a
+          radial-gradient falloff so it reads as ink under the photo, not a glassy mesh. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 -left-24 h-[28rem] w-[28rem] rounded-full bg-blush opacity-50 blur-[110px]"
+        className="pointer-events-none absolute -top-24 -left-20 h-[26rem] w-[26rem] rounded-[58%_42%_63%_37%/45%_55%_45%_55%]"
+        style={{
+          background:
+            "radial-gradient(closest-side, var(--color-blush), transparent 72%)",
+        }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-20 bottom-0 h-[24rem] w-[24rem] rounded-full bg-butter opacity-60 blur-[110px]"
+        className="pointer-events-none absolute -right-16 bottom-0 h-[22rem] w-[22rem] rounded-[42%_58%_35%_65%/55%_45%_58%_42%]"
+        style={{
+          background:
+            "radial-gradient(closest-side, var(--color-butter), transparent 72%)",
+        }}
       />
 
       <div className="relative mx-auto grid max-w-6xl gap-10 px-6 pt-12 pb-16 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-10 lg:pt-16 lg:pb-24">
@@ -98,16 +106,14 @@ export function Hero() {
               |
             </span>
             <span>
-              {business.rating.value.toFixed(1)}★ from {business.rating.count} Google
+              {business.rating.value.toFixed(1)}★ from {business.rating.displayCount} Google
               reviews
             </span>
           </div>
         </div>
 
-        {/* The photo keeps its native 3:4 crop at every breakpoint so the full
-            frame — sign, hatch and Rooky on the footpath — always fits. The
-            parallax moves the frame itself rather than the image inside it,
-            which means nothing is ever trimmed to make room for the motion. */}
+        {/* Native 3:4 crop at every breakpoint keeps the full frame in view;
+            parallax moves the frame itself so the image is never trimmed. */}
         <div
           ref={frameRef}
           className="hero-frame relative"

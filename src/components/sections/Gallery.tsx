@@ -6,6 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { galleryImages } from "@/data/gallery";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Reveal } from "@/components/ui/Reveal";
 import { Arrow } from "@/components/ui/Arrow";
 
 // The arrows sit over the rail itself, centred on the slides, so the control is
@@ -16,8 +17,9 @@ const arrowButton =
 export function Gallery() {
   const [autoplay] = useState(() =>
     Autoplay({
-      delay: 4000,
-      stopOnInteraction: true,
+      delay: 2500,
+      // false so a click/drag/hover only pauses the loop, not kills it for good.
+      stopOnInteraction: false,
       stopOnMouseEnter: true,
       rootNode: (emblaRoot) => emblaRoot.parentElement,
     })
@@ -45,8 +47,7 @@ export function Gallery() {
       autoplay.stop();
     }
 
-    // Intentional: sync selectedIndex to embla's internal snap position once
-    // the carousel instance exists (emblaApi isn't available during render).
+    // emblaApi isn't available during render, so sync selectedIndex here.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect();
     emblaApi.on("select", onSelect);
@@ -70,80 +71,78 @@ export function Gallery() {
   return (
     <section id="gallery" className="bg-sand/50">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:px-8 md:py-32 lg:px-10">
-        <SectionHeading
-          eyebrow="The gallery"
-          title="A few frames from the window"
-          align="center"
-        />
+        <SectionHeading title="A few frames from the window" align="center" />
 
-        <div
-          className="mt-12 rounded-3xl outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
-          tabIndex={0}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="ames coffee photo gallery"
-          onKeyDown={handleKeyDown}
-        >
-          <div className="relative">
-            <button
-              type="button"
-              onClick={scrollPrev}
-              aria-label="Previous photo"
-              className={`${arrowButton} left-1 sm:left-3`}
-            >
-              <Arrow direction="left" className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={scrollNext}
-              aria-label="Next photo"
-              className={`${arrowButton} right-1 sm:right-3`}
-            >
-              <Arrow direction="right" className="h-5 w-5" />
-            </button>
+        <Reveal delay={100} className="mt-12">
+          <div
+            className="rounded-3xl outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="ames coffee photo gallery"
+            onKeyDown={handleKeyDown}
+          >
+            <div className="relative">
+              <button
+                type="button"
+                onClick={scrollPrev}
+                aria-label="Previous photo"
+                className={`${arrowButton} left-1 sm:left-3`}
+              >
+                <Arrow direction="left" className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={scrollNext}
+                aria-label="Next photo"
+                className={`${arrowButton} right-1 sm:right-3`}
+              >
+                <Arrow direction="right" className="h-5 w-5" />
+              </button>
 
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex cursor-grab touch-pan-y active:cursor-grabbing">
-                {galleryImages.map((image, index) => (
-                  <div
-                    key={image.src}
-                    className="min-w-0 shrink-0 grow-0 basis-[78%] px-2 sm:basis-[55%] lg:basis-[42%]"
-                  >
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex cursor-grab touch-pan-y active:cursor-grabbing">
+                  {galleryImages.map((image, index) => (
                     <div
-                      className={`relative aspect-[4/5] overflow-hidden rounded-[1.5rem] ring-1 ring-ink/[0.06] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-[2rem] ${
-                        index === selectedIndex
-                          ? "scale-100 opacity-100 shadow-[0_30px_60px_-32px_rgba(34,30,26,0.55)]"
-                          : "scale-[0.94] opacity-45"
-                      }`}
+                      key={image.src}
+                      className="min-w-0 shrink-0 grow-0 basis-[78%] px-2 sm:basis-[55%] lg:basis-[42%]"
                     >
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        loading={index === 0 ? "eager" : "lazy"}
-                        sizes="(min-width: 1024px) 42vw, (min-width: 640px) 55vw, 78vw"
-                        className="object-cover"
-                      />
+                      <div
+                        className={`relative aspect-[4/5] overflow-hidden rounded-[1.5rem] ring-1 ring-ink/[0.06] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-[2rem] ${
+                          index === selectedIndex
+                            ? "scale-100 opacity-100 shadow-[0_30px_60px_-32px_rgba(34,30,26,0.55)]"
+                            : "scale-[0.94] opacity-45"
+                        }`}
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          loading={index === 0 ? "eager" : "lazy"}
+                          sizes="(min-width: 1024px) 42vw, (min-width: 640px) 55vw, 78vw"
+                          className="object-cover"
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <div className="h-px w-24 bg-border sm:w-32">
-              <div
-                className="h-px bg-coral transition-all duration-500 ease-out"
-                style={{ width: `${progress}%` }}
-              />
+            <div className="mt-6 flex items-center justify-center gap-4">
+              <div className="h-px w-24 bg-border sm:w-32">
+                <div
+                  className="h-px bg-coral transition-all duration-500 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-sm tabular-nums text-text-secondary">
+                {String(selectedIndex + 1).padStart(2, "0")} /{" "}
+                {String(galleryImages.length).padStart(2, "0")}
+              </span>
             </div>
-            <span className="text-sm tabular-nums text-text-secondary">
-              {String(selectedIndex + 1).padStart(2, "0")} /{" "}
-              {String(galleryImages.length).padStart(2, "0")}
-            </span>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

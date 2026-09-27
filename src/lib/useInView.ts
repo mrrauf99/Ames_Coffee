@@ -14,9 +14,7 @@ export function useInView<T extends HTMLElement>(threshold = 0.2) {
       "(prefers-reduced-motion: reduce)"
     ).matches;
     if (prefersReducedMotion) {
-      // Intentional: reduced-motion state can only be known once mounted in
-      // the browser (matchMedia is unavailable during SSR/render), so this
-      // one-time sync can't be computed during render.
+      // matchMedia is unavailable during SSR, so this can't be computed during render.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsInView(true);
       return;

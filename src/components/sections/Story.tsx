@@ -22,8 +22,11 @@ export function Story() {
         </Reveal>
 
         <div>
-          <SectionHeading eyebrow="The story" title="One window, a few hours a day." />
-          <div className="mt-6 flex flex-col gap-4 text-base leading-relaxed text-text-secondary">
+          <SectionHeading title="One window, a few hours a day." />
+          <Reveal
+            delay={100}
+            className="mt-6 flex flex-col gap-4 text-base leading-relaxed text-text-secondary"
+          >
             <p>
               ames coffee isn&apos;t a café you sit down in. It&apos;s one black
               serving hatch on the corner of McLennan Street, open from 6am
@@ -38,10 +41,10 @@ export function Story() {
               {business.dog.name} the border collie runs the footpath out front.
             </p>
             <p>
-              {business.rating.count} reviews on Google, and every one of them
+              {business.rating.displayCount} reviews on Google, and every one of them
               is five stars.
             </p>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

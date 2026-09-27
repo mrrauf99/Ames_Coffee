@@ -9,11 +9,7 @@ type RevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  /**
-   * rise    — the default: content lifts into place.
-   * curtain — wipes upward from the bottom edge; reserved for photography, so an
-   *           image resolves like a print coming up in a tray rather than sliding.
-   */
+  /** rise (default): lifts into place. curtain: wipes upward, reserved for photography. */
   variant?: RevealVariant;
 };
 
@@ -29,10 +25,8 @@ const shown: Record<RevealVariant, string> = {
 
 const TRANSITION: Record<RevealVariant, string> = {
   rise: "transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-  // Curtain only ever wraps photography (Story, Visit). 900ms held the fully
-  // in-view, already-loaded image behind a clip-path for most of a second
-  // after scrolling to it — the photo read as slow to appear even though it
-  // had nothing left to load.
+  // Shorter than `rise`: at 900ms the already-loaded photo read as slow to
+  // appear even though it had nothing left to load.
   curtain: "transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
 };
 
@@ -45,11 +39,8 @@ export function Reveal({
   const { ref, isInView } = useInView<HTMLDivElement>();
 
   // IntersectionObserver measures the target *after* clipping, so an element
-  // that hides itself with clip-path reports a zero-area intersection and never
-  // trips its own observer. The curtain therefore clips an inner layer and
-  // leaves the observed box unclipped. Callers pass a positioned frame
-  // (relative + aspect + overflow-hidden), so inset-0 fills it exactly and
-  // next/image's `fill` still resolves against a positioned ancestor.
+  // that clips itself never trips its own observer. Clip an inner layer instead
+  // and leave the observed box unclipped.
   if (variant === "curtain") {
     return (
       <div ref={ref} className={`relative ${className}`}>

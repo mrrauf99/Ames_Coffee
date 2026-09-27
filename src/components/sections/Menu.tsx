@@ -4,14 +4,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rose } from "@/components/ui/Rose";
 
-// The menu is the one thing a visitor actually came for, so it gets the page's
-// only piece of real staging: a pale board mounted inside the black hatch,
-// laid out the way ames lays out its own printed menu — periwinkle category
-// bars, blue prices, roses over the top.
+// The menu gets the page's only piece of real staging: a pale board mounted
+// inside the black hatch, laid out the way ames lays out its own printed menu.
 
-function MenuGroupBlock({ group }: { group: MenuGroup }) {
+function MenuGroupBlock({ group, delay = 0 }: { group: MenuGroup; delay?: number }) {
   return (
-    <div>
+    <Reveal delay={delay}>
       <div className="flex items-baseline justify-center gap-2 rounded-full bg-periwinkle px-4 py-1.5">
         <h3 className="font-display text-sm font-semibold lowercase tracking-[0.06em] text-white">
           {group.title}
@@ -50,7 +48,7 @@ function MenuGroupBlock({ group }: { group: MenuGroup }) {
           </li>
         ))}
       </ul>
-    </div>
+    </Reveal>
   );
 }
 
@@ -62,7 +60,6 @@ export function Menu() {
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-8 md:py-28 lg:px-10">
         <div className="flex justify-center">
           <SectionHeading
-            eyebrow="The menu"
             title="Everything on the board"
             description="Straight off the sign in the window. Same names, same prices."
             align="center"
@@ -70,16 +67,25 @@ export function Menu() {
           />
         </div>
 
-        <Reveal delay={80} className="mt-12">
+        <Reveal className="mt-12">
           <div className="relative overflow-hidden rounded-[1.75rem] bg-paper px-5 py-9 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] sm:rounded-[2.25rem] sm:px-10 md:px-14 md:py-12">
-            {/* The soft shapes printed behind ames' own menu. */}
+            {/* The soft shapes printed behind ames' own menu, drawn as an
+                irregular ink wash rather than a blurred circle. */}
             <div
               aria-hidden
-              className="pointer-events-none absolute -top-16 left-1/4 h-72 w-72 rounded-full bg-blush opacity-60 blur-3xl"
+              className="pointer-events-none absolute -top-16 left-1/4 h-72 w-72 rounded-[55%_45%_60%_40%/48%_52%_48%_52%]"
+              style={{
+                background:
+                  "radial-gradient(closest-side, var(--color-blush), transparent 72%)",
+              }}
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute right-0 bottom-8 h-72 w-72 rounded-full bg-butter opacity-70 blur-3xl"
+              className="pointer-events-none absolute right-0 bottom-8 h-72 w-72 rounded-[40%_60%_45%_55%/55%_45%_55%_45%]"
+              style={{
+                background:
+                  "radial-gradient(closest-side, var(--color-butter), transparent 72%)",
+              }}
             />
 
             <div className="relative">
@@ -103,12 +109,13 @@ export function Menu() {
                 </ul>
               </div>
 
+              {/* Groups stagger in by row across both columns (not reading order), capped at 240ms. */}
               <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-x-14">
                 <div className="flex flex-col gap-10">
-                  <MenuGroupBlock group={coffee} />
-                  <MenuGroupBlock group={iced} />
+                  <MenuGroupBlock group={coffee} delay={80} />
+                  <MenuGroupBlock group={iced} delay={160} />
 
-                  <div>
+                  <Reveal delay={240}>
                     <div className="flex items-baseline justify-center gap-2 rounded-full bg-periwinkle px-4 py-1.5">
                       <h3 className="font-display text-sm font-semibold lowercase tracking-[0.06em] text-white">
                         Winter add-ons
@@ -122,12 +129,12 @@ export function Menu() {
                         <li key={item}>+ {item}</li>
                       ))}
                     </ul>
-                  </div>
+                  </Reveal>
                 </div>
 
                 <div className="flex flex-col gap-10">
-                  <MenuGroupBlock group={signature} />
-                  <MenuGroupBlock group={juices} />
+                  <MenuGroupBlock group={signature} delay={80} />
+                  <MenuGroupBlock group={juices} delay={160} />
                 </div>
               </div>
 

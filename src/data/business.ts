@@ -1,7 +1,5 @@
-// Single source of truth for verified business facts.
-// Everything here is taken directly from the live Google Maps listing for
-// "ames coffee" (checked 2026-08-10).
-// Do not add anything here that hasn't been verified against that listing or supplied by the owner.
+// Source of truth for verified business facts, taken from the live Google Maps
+// listing for "ames coffee" (checked 2026-08-10). Only add facts verified there or by the owner.
 
 export const business = {
   name: "ames coffee",
@@ -30,15 +28,16 @@ export const business = {
     tel: "+61401663924",
   },
 
-  // Uses the Maps "search" action (not a place/CID URL) so it reliably opens
-  // with the "ames coffee" name and pin, rather than falling back to raw
-  // coordinates if a stale CID fails to resolve.
+  // Uses the Maps "search" action, not a place/CID URL, which can fall back
+  // to raw coordinates if a stale CID fails to resolve.
   googleMapsUrl:
     "https://www.google.com/maps/search/?api=1&query=ames+coffee+63+McLennan+St%2C+Albion+QLD+4010%2C+Australia",
 
   rating: {
     value: 5.0,
-    count: 45,
+    count: 60,
+    // Google shows "60+" now; `count` stays a plain integer for layout.tsx's structured data.
+    displayCount: "60+",
   },
 
   priceRange: "$1–20",

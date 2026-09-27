@@ -8,10 +8,8 @@ import { OpenStatusBadge } from "@/components/ui/OpenStatusBadge";
 
 type NavLink = { id: string; label: string };
 
-// The drawer is portalled to <body>, which needs a real document, so it can
-// only render once we are past the server pass. Reading "am I on the client"
-// through useSyncExternalStore keeps hydration honest without a setState in an
-// effect, which cascades an extra render.
+// The drawer is portalled to <body>, so it can only render client-side.
+// useSyncExternalStore tracks that without a setState-in-effect render cascade.
 const subscribeToNothing = () => () => {};
 
 export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: string }) {
@@ -41,8 +39,7 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
         close();
         return;
       }
-      // The page behind the drawer stays in the tab order, so cycle focus
-      // inside the panel by hand rather than letting Tab wander off.
+      // Page behind the drawer stays in the tab order, so trap Tab manually.
       if (event.key !== "Tab") return;
       const items = focusable();
       if (items.length === 0) return;
@@ -57,9 +54,8 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
       }
     };
 
-    // Rotating to landscape or resizing up to the desktop layout hides the
-    // drawer via md:hidden. Without this it would stay "open" and leave the
-    // body scroll locked with nothing on screen to close.
+    // Resizing to desktop hides the drawer via md:hidden; close it explicitly
+    // or it stays "open" with body scroll locked and nothing on screen to close.
     const desktop = window.matchMedia("(min-width: 768px)");
     const onBreakpointChange = () => {
       if (desktop.matches) setOpen(false);
@@ -78,14 +74,11 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
     };
   }, [open, close]);
 
-  // The panel's own slide is the main move; its contents drift in just behind
-  // it on a stagger, which reads softer than the whole drawer arriving as one
-  // rigid block. Closing skips the delays so dismissal still feels immediate.
-  // Written as [transform:...] rather than Tailwind's translate-x-* utilities:
-  // those set the `translate` property via a --tw-translate-x custom property,
-  // and the var swap lands instantly instead of interpolating, so the drawer
-  // snapped into place. Setting transform directly gives the transition two
-  // real values to animate between.
+  // Contents stagger in behind the panel's slide for a softer entrance; closing
+  // skips the delays so dismissal feels immediate. Uses [transform:...] instead
+  // of Tailwind's translate-x-* utilities because those animate via a
+  // --tw-translate-x custom property, which swaps instantly instead of
+  // interpolating.
   const reveal = `transition-[opacity,transform,background-color,color] ease-[cubic-bezier(0.22,1,0.36,1)] ${
     open
       ? "[transform:translateX(0)] opacity-100 duration-500"
@@ -130,11 +123,9 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
               role="dialog"
               aria-modal="true"
               aria-label="Site menu"
-              // inert while closed so the off-screen panel is not tabbable and
-              // is not read out by screen readers.
+              // Not tabbable or read by screen readers while off-screen.
               inert={!open ? true : undefined}
-              // cubic-bezier(0.32, 0.72, 0, 1) decelerates hard at the tail, so
-              // the panel settles into place rather than stopping dead.
+              // Decelerates hard at the tail so the panel settles rather than stops dead.
               className={`fixed top-0 right-0 z-[60] flex h-dvh w-[min(82vw,320px)] flex-col bg-paper shadow-[-18px_0_50px_-24px_rgba(34,30,26,0.6)] transition-transform ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden ${
                 open
                   ? "[transform:translateX(0)] duration-[550ms]"
@@ -142,12 +133,9 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
               }`}
             >
               <div
-                className={`flex items-center justify-between border-b border-border/60 px-6 py-5 ${reveal}`}
+                className={`flex items-center justify-end border-b border-border/60 px-6 py-3 ${reveal}`}
                 style={revealDelay(0)}
               >
-                <span className="font-display text-xl italic leading-none text-ink">
-                  {business.name}
-                </span>
                 <button
                   type="button"
                   onClick={close}

@@ -1,6 +1,5 @@
-// Image manifest. All photos originate from ames coffee's public Google Maps listing
-// (owner + customer uploads), so they carry a licensing caveat: swap `src` for
-// owner-supplied originals when those become available.
+// Photos originate from ames coffee's public Google Maps listing (owner +
+// customer uploads); swap `src` for owner-supplied originals when available.
 
 export type GalleryImage = {
   src: string;
@@ -48,18 +47,6 @@ export const galleryImages: GalleryImage[] = [
     alt: "Two ames coffee cups on the footpath table with the residential street behind",
     width: 1171,
     height: 1560,
-  },
-  {
-    src: "/images/side-angle.jpg",
-    alt: "Angled view of the ames coffee awning with warm string lights along the eave",
-    width: 1600,
-    height: 1200,
-  },
-  {
-    src: "/images/closed-shutter.jpg",
-    alt: "ames coffee's black shutter closed, with the rose-and-script sign above",
-    width: 1200,
-    height: 1600,
   },
   {
     src: "/images/latte-sticker.jpg",

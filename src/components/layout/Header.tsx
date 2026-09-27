@@ -17,9 +17,7 @@ const NAV_LINKS = [
 
 const NAV_IDS = NAV_LINKS.map((link) => link.id);
 
-// Sections that already show their own directions button. While one of these is
-// on screen the header hides its copy so the same call to action never appears
-// twice at once.
+// Sections with their own directions button; hide the header's copy while one is on screen.
 const CTA_SECTION_IDS = ["visit"];
 
 export function Header() {
@@ -112,8 +110,7 @@ export function Header() {
           </a>
         </div>
 
-        {/* Small screens have no room for the inline nav or the CTA, so both
-            move into a drawer behind this toggle. */}
+        {/* No room for the inline nav or CTA on small screens; both move into this drawer. */}
         <MobileNav links={NAV_LINKS} activeId={activeId} />
       </div>
     </header>

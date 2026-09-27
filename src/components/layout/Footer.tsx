@@ -1,5 +1,6 @@
 import { business } from "@/data/business";
 import { Rose } from "@/components/ui/Rose";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function Footer() {
   return (
@@ -17,7 +18,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="mt-5 inline-flex items-center gap-2 rounded-full border border-cream/25 px-4 py-2 text-xs font-semibold tracking-wide transition-colors hover:border-coral hover:text-coral"
             >
-              ★ {business.rating.value.toFixed(1)} · {business.rating.count} reviews on
+              ★ {business.rating.value.toFixed(1)} · {business.rating.displayCount} reviews on
               Google
             </a>
           </div>
@@ -48,15 +49,17 @@ export function Footer() {
           </div>
         </div>
 
-        {/* The wordmark plays the part of the painted sign board: the last thing
-            you see, at the size it is on the street. */}
-        <div className="flex items-end justify-center gap-3 border-t border-cream/10 pt-10">
+        {/* Plays the part of the painted sign board; reveals on its own beat since nothing else is this large. */}
+        <Reveal
+          delay={100}
+          className="flex items-end justify-center gap-3 border-t border-cream/10 pt-10"
+        >
           <Rose className="mb-3 h-12 w-9 sm:h-20 sm:w-14" flipped />
           <span className="font-display text-[clamp(3rem,13vw,9rem)] leading-[0.85] font-normal italic">
             ames
           </span>
           <Rose className="mb-3 h-12 w-9 sm:h-20 sm:w-14" />
-        </div>
+        </Reveal>
       </div>
 
       <div className="relative mt-8 border-t border-cream/10 px-6 py-4 text-center text-xs text-cream/60 sm:px-8 lg:px-10">

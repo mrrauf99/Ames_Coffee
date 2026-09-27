@@ -5,11 +5,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { OpenStatusBadge } from "@/components/ui/OpenStatusBadge";
+import { Rose } from "@/components/ui/Rose";
 
-// Query by name + address (not raw lat/lng) so the embed resolves to the
-// actual "ames coffee" listing — a coordinate-only query can drop the pin
-// near the nearest intersection instead of on the storefront, and its
-// built-in "Open in Maps" link would carry that same imprecise query along.
+// Query by name + address, not raw lat/lng — a coordinate-only query can drop
+// the pin near the nearest intersection instead of on the storefront.
 const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
   `${business.name}, ${business.address.full}`
 )}&z=17&output=embed`;
@@ -21,6 +20,8 @@ const goodToKnow = [
   "Dogs and kids welcome",
 ];
 
+// Paper + a rose bloom rather than a bordered card, so these read as facts off
+// the same printed board as the Menu section.
 function Card({
   title,
   children,
@@ -29,10 +30,13 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-border/70 bg-paper p-6">
-      <p className="text-xs font-semibold tracking-[0.18em] text-denim uppercase">
-        {title}
-      </p>
+    <div className="rounded-2xl bg-paper p-6 shadow-[0_18px_40px_-30px_rgba(34,30,26,0.4)] ring-1 ring-ink/[0.05]">
+      <div className="flex items-center gap-2">
+        <Rose variant="bloom" className="h-3 w-3 shrink-0" />
+        <p className="text-xs font-semibold tracking-[0.18em] text-denim uppercase">
+          {title}
+        </p>
+      </div>
       <div className="mt-3">{children}</div>
     </div>
   );
@@ -43,7 +47,6 @@ export function Visit() {
     <section id="visit" className="bg-cream">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:px-8 md:py-32 lg:px-10">
         <SectionHeading
-          eyebrow="Visit us"
           title="Find the window."
           description="On the corner of McLennan Street in Albion. Look for the black hatch with the roses painted above it."
         />
@@ -78,11 +81,17 @@ export function Visit() {
             </Card>
 
             <Card title="Hours">
-              <ul className="space-y-1.5 text-text-secondary">
+              <ul className="flex flex-col gap-1.5">
                 {business.hoursSummary.map((row) => (
-                  <li key={row.label} className="flex justify-between gap-4">
+                  <li key={row.label} className="flex items-baseline gap-3">
                     <span className="text-ink">{row.label}</span>
-                    <span className="tabular-nums">{row.value}</span>
+                    <span
+                      aria-hidden
+                      className="h-0 flex-1 -translate-y-1 border-b border-dotted border-denim/25"
+                    />
+                    <span className="font-semibold tabular-nums text-denim">
+                      {row.value}
+                    </span>
                   </li>
                 ))}
               </ul>
