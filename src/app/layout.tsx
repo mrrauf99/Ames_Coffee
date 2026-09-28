@@ -94,7 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-coral focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:text-ink focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-coral"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-full focus:bg-coral focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:text-ink focus:outline-2 focus:outline-offset-2 focus:outline-coral"
         >
           Skip to content
         </a>

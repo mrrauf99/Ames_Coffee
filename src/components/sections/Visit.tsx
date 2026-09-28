@@ -31,7 +31,7 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl bg-paper p-6 shadow-[0_18px_40px_-30px_rgba(34,30,26,0.4)] ring-1 ring-ink/[0.05]">
+    <div className="rounded-2xl bg-paper p-6 shadow-[0_18px_40px_-30px_rgba(34,30,26,0.4)] ring-1 ring-ink/5">
       <div className="flex items-center gap-2">
         <Rose variant="bloom" className="h-3 w-3 shrink-0" />
         <p className="text-xs font-semibold tracking-[0.18em] text-denim uppercase">
@@ -57,7 +57,7 @@ export function Visit() {
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:items-stretch">
           <Reveal
             variant="curtain"
-            className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-35px_rgba(34,30,26,0.5)] ring-1 ring-ink/[0.06] sm:rounded-[2.5rem] lg:aspect-auto lg:h-full"
+            className="relative aspect-4/3 overflow-hidden rounded-4xl shadow-[0_30px_60px_-35px_rgba(34,30,26,0.5)] ring-1 ring-ink/6 sm:rounded-[2.5rem] lg:aspect-auto lg:h-full"
           >
             <FadeImage
               src={visitImage.src}

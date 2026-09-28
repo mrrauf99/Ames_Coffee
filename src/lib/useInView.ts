@@ -11,11 +11,11 @@ export function useInView<T extends HTMLElement>(threshold = 0.2) {
     if (!el) return;
 
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
     if (prefersReducedMotion) {
       // matchMedia is unavailable during SSR, so this can't be computed during render.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      // oxlint-disable-next-line react/set-state-in-effect
       setIsInView(true);
       return;
     }
@@ -27,7 +27,7 @@ export function useInView<T extends HTMLElement>(threshold = 0.2) {
           observer.disconnect();
         }
       },
-      { threshold }
+      { threshold },
     );
 
     observer.observe(el);

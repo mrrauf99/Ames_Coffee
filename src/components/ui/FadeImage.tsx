@@ -29,7 +29,7 @@ export function FadeImage({ className = "", alt, onLoad, onError, ...props }: Im
         setErrored(true);
         onError?.(event);
       }}
-      className={`transition-[opacity,transform,filter] duration-[350ms] ease-out motion-reduce:transition-none ${
+      className={`transition-[opacity,transform,filter] duration-350 ease-out motion-reduce:transition-none ${
         loaded ? "scale-100 opacity-100 blur-0" : "scale-[1.03] opacity-0 blur-md"
       } ${className}`}
     />

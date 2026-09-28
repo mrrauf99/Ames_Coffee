@@ -12,7 +12,7 @@ import { Arrow } from "@/components/ui/Arrow";
 // The arrows sit over the rail itself, centred on the slides, so the control is
 // where the photo is rather than parked underneath it.
 const arrowButton =
-  "absolute top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-ink/80 text-cream shadow-[0_12px_28px_-10px_rgba(34,30,26,0.85)] backdrop-blur-sm transition-all duration-200 ease-out hover:scale-105 hover:bg-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral sm:h-14 sm:w-14";
+  "absolute top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-ink/80 text-cream shadow-[0_12px_28px_-10px_rgba(34,30,26,0.85)] backdrop-blur-sm transition-all duration-200 ease-out hover:scale-105 hover:bg-coral focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral sm:h-14 sm:w-14";
 
 export function Gallery() {
   const [autoplay] = useState(() =>
@@ -22,12 +22,12 @@ export function Gallery() {
       stopOnInteraction: false,
       stopOnMouseEnter: true,
       rootNode: (emblaRoot) => emblaRoot.parentElement,
-    })
+    }),
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "center" },
-    [autoplay]
+    [autoplay],
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -42,11 +42,11 @@ export function Gallery() {
     if (!emblaApi) return;
 
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
     if (prefersReducedMotion) {
       autoplay.stop();
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      // oxlint-disable-next-line react/set-state-in-effect
       setIsPlaying(false);
     }
 
@@ -90,7 +90,7 @@ export function Gallery() {
         {/* Shorter than the 900ms default — these photos are usually already loaded by the time this scrolls into view. */}
         <Reveal delay={100} duration={400} className="mt-12">
           <div
-            className="rounded-3xl outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
+            className="rounded-3xl outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
@@ -123,7 +123,7 @@ export function Gallery() {
                       className="min-w-0 shrink-0 grow-0 basis-[78%] px-2 sm:basis-[55%] lg:basis-[42%]"
                     >
                       <div
-                        className={`relative aspect-[4/5] overflow-hidden rounded-[1.5rem] ring-1 ring-ink/[0.06] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-[2rem] ${
+                        className={`relative aspect-4/5 overflow-hidden rounded-3xl ring-1 ring-ink/6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-4xl ${
                           index === selectedIndex
                             ? "scale-100 opacity-100 shadow-[0_30px_60px_-32px_rgba(34,30,26,0.55)]"
                             : "scale-[0.94] opacity-45"
@@ -152,15 +152,25 @@ export function Gallery() {
                 onClick={toggleAutoplay}
                 aria-pressed={isPlaying}
                 aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-text-secondary transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-text-secondary transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
               >
                 {isPlaying ? (
-                  <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor">
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    className="h-3.5 w-3.5"
+                    fill="currentColor"
+                  >
                     <rect x="3.5" y="2.5" width="3" height="11" rx="1" />
                     <rect x="9.5" y="2.5" width="3" height="11" rx="1" />
                   </svg>
                 ) : (
-                  <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor">
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    className="h-3.5 w-3.5"
+                    fill="currentColor"
+                  >
                     <path d="M4 2.5v11l10-5.5-10-5.5Z" />
                   </svg>
                 )}

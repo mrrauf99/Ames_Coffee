@@ -29,7 +29,7 @@ export function Highlights() {
     <section
       tabIndex={0}
       aria-label="What to know about ames coffee, auto-scrolling — focus to pause"
-      className="marquee overflow-hidden border-y border-border/70 bg-sand/60 py-3.5 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-coral"
+      className="marquee overflow-hidden border-y border-border/70 bg-sand/60 py-3.5 outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-coral"
     >
       <div className="marquee-track flex w-max">
         <Row />

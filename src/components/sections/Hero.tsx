@@ -15,7 +15,7 @@ export function Hero() {
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
     if (prefersReducedMotion) return;
 
@@ -26,7 +26,10 @@ export function Hero() {
         const el = frameRef.current;
         if (!el) return;
         const rect = el.getBoundingClientRect();
-        const progress = Math.min(Math.max(1 - rect.top / window.innerHeight, 0), 1);
+        const progress = Math.min(
+          Math.max(1 - rect.top / window.innerHeight, 0),
+          1,
+        );
         setOffset((progress - 0.5) * 28);
       });
     }
@@ -40,12 +43,12 @@ export function Hero() {
   }, []);
 
   return (
-    <section id="top" className="relative overflow-hidden bg-cream">
+    <section id="home" className="relative overflow-hidden bg-cream">
       {/* Ambient wash from ames' printed menu: an irregular silhouette with a
           radial-gradient falloff so it reads as ink under the photo, not a glassy mesh. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 -left-20 h-[26rem] w-[26rem] rounded-[58%_42%_63%_37%/45%_55%_45%_55%]"
+        className="pointer-events-none absolute -top-24 -left-20 h-104 w-104 rounded-[58%_42%_63%_37%/45%_55%_45%_55%]"
         style={{
           background:
             "radial-gradient(closest-side, var(--color-blush), transparent 72%)",
@@ -53,7 +56,7 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 bottom-0 h-[22rem] w-[22rem] rounded-[42%_58%_35%_65%/55%_45%_58%_42%]"
+        className="pointer-events-none absolute -right-16 bottom-0 h-88 w-88 rounded-[42%_58%_35%_65%/55%_45%_58%_42%]"
         style={{
           background:
             "radial-gradient(closest-side, var(--color-butter), transparent 72%)",
@@ -108,8 +111,8 @@ export function Hero() {
               |
             </span>
             <span>
-              {business.rating.value.toFixed(1)}★ from {business.rating.displayCount} Google
-              reviews
+              {business.rating.value.toFixed(1)}★ from{" "}
+              {business.rating.displayCount} Google reviews
             </span>
           </div>
         </div>
@@ -122,11 +125,15 @@ export function Hero() {
           style={{ animationDelay: "180ms" }}
         >
           <div
-            className="relative aspect-[3/4] w-full overflow-hidden rounded-[2rem] bg-sand shadow-[0_30px_60px_-30px_rgba(34,30,26,0.45)] ring-1 ring-ink/[0.06] transition-transform duration-300 ease-out sm:rounded-[2.5rem]"
+            className="relative aspect-3/4 w-full overflow-hidden rounded-4xl bg-sand shadow-[0_30px_60px_-30px_rgba(34,30,26,0.45)] ring-1 ring-ink/6 transition-transform duration-300 ease-out sm:rounded-[2.5rem]"
             style={{ transform: `translateY(${offset}px)` }}
           >
             {imageErrored ? (
-              <div className="absolute inset-0 flex items-center justify-center bg-sand" role="img" aria-label={heroImage.alt}>
+              <div
+                className="absolute inset-0 flex items-center justify-center bg-sand"
+                role="img"
+                aria-label={heroImage.alt}
+              >
                 <Rose variant="bloom" className="h-10 w-10 opacity-40" />
               </div>
             ) : (

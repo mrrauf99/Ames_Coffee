@@ -24,7 +24,7 @@ function MenuGroupBlock({ group, delay = 0 }: { group: MenuGroup; delay?: number
         {group.items.map((item) => (
           <li
             key={item.name}
-            className="-mx-3 flex items-baseline gap-3 rounded-xl px-3 py-2.5 transition-colors duration-200 hover:bg-denim/[0.06]"
+            className="-mx-3 flex items-baseline gap-3 rounded-xl px-3 py-2.5 transition-colors duration-200 hover:bg-denim/6"
           >
             <div className="min-w-0">
               <p className="font-medium text-ink">{item.name}</p>

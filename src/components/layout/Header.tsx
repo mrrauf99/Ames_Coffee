@@ -10,6 +10,7 @@ import { useHeaderState } from "@/lib/useHeaderState";
 import { MobileNav } from "@/components/layout/MobileNav";
 
 const NAV_LINKS = [
+  { id: "home", label: "Home" },
   { id: "menu", label: "Menu" },
   { id: "story", label: "Story" },
   { id: "gallery", label: "Gallery" },
@@ -23,10 +24,13 @@ const CTA_SECTION_IDS = ["visit"];
 
 export function Header() {
   const activeId = useActiveSection(NAV_IDS);
-  const { condensed, showCta } = useHeaderState("top", CTA_SECTION_IDS);
+  const { condensed, showCta } = useHeaderState("home", CTA_SECTION_IDS);
   const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
+  const [indicator, setIndicator] = useState<{
+    left: number;
+    width: number;
+  } | null>(null);
 
   useEffect(() => {
     const nav = navRef.current;
@@ -57,13 +61,17 @@ export function Header() {
         }`}
       >
         <Link
-          href="#top"
+          href="#home"
           className="font-display text-2xl italic leading-none text-ink transition-colors hover:text-coral-text"
         >
           {business.name}
         </Link>
 
-        <nav ref={navRef} aria-label="Sections" className="relative hidden items-center gap-8 md:flex">
+        <nav
+          ref={navRef}
+          aria-label="Sections"
+          className="relative hidden items-center gap-8 md:flex"
+        >
           {NAV_LINKS.map((link) => (
             <Link
               key={link.id}
@@ -72,8 +80,10 @@ export function Header() {
                 linkRefs.current[link.id] = el;
               }}
               aria-current={activeId === link.id ? "page" : undefined}
-              className={`rounded-sm py-1 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral ${
-                activeId === link.id ? "text-coral-text" : "text-ink/75 hover:text-ink"
+              className={`rounded-sm py-1 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral ${
+                activeId === link.id
+                  ? "text-coral-text"
+                  : "text-ink/75 hover:text-ink"
               }`}
             >
               {link.label}
@@ -81,7 +91,7 @@ export function Header() {
           ))}
           <span
             aria-hidden
-            className="absolute -bottom-[1px] h-[2px] rounded-full bg-coral transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            className="absolute -bottom-px h-0.5 rounded-full bg-coral transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={{
               left: indicator?.left ?? 0,
               width: indicator?.width ?? 0,
@@ -115,7 +125,7 @@ export function Header() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Get directions"
-          className="-mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral md:hidden"
+          className="-mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral md:hidden"
         >
           <svg
             aria-hidden

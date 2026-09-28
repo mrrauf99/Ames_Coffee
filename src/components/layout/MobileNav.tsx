@@ -81,8 +81,8 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
   // interpolating.
   const reveal = `transition-[opacity,transform,background-color,color] ease-[cubic-bezier(0.22,1,0.36,1)] ${
     open
-      ? "[transform:translateX(0)] opacity-100 duration-500"
-      : "[transform:translateX(20px)] opacity-0 duration-200"
+      ? "transform-[translateX(0)] opacity-100 duration-500"
+      : "transform-[translateX(20px)] opacity-0 duration-200"
   }`;
   const revealDelay = (index: number) => ({
     transitionDelay: open ? `${130 + index * 55}ms` : "0ms",
@@ -97,9 +97,9 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         aria-label="Open menu"
-        className="-mr-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral md:hidden"
+        className="-mr-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral md:hidden"
       >
-        <span aria-hidden className="flex w-5 flex-col gap-[5px]">
+        <span aria-hidden className="flex w-5 flex-col gap-1.25">
           <span className="h-[1.5px] w-full rounded-full bg-current" />
           <span className="h-[1.5px] w-full rounded-full bg-current" />
           <span className="h-[1.5px] w-3.5 rounded-full bg-current" />
@@ -112,8 +112,8 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
             <div
               aria-hidden
               onClick={close}
-              className={`fixed inset-0 z-[55] bg-ink/45 backdrop-blur-[2px] transition-opacity ease-out md:hidden ${
-                open ? "opacity-100 duration-[550ms]" : "pointer-events-none opacity-0 duration-300"
+              className={`fixed inset-0 z-55 bg-ink/45 backdrop-blur-[2px] transition-opacity ease-out md:hidden ${
+                open ? "opacity-100 duration-550" : "pointer-events-none opacity-0 duration-300"
               }`}
             />
 
@@ -126,10 +126,10 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
               // Not tabbable or read by screen readers while off-screen.
               inert={!open ? true : undefined}
               // Decelerates hard at the tail so the panel settles rather than stops dead.
-              className={`fixed top-0 right-0 z-[60] flex h-dvh w-[min(82vw,320px)] flex-col bg-paper shadow-[-18px_0_50px_-24px_rgba(34,30,26,0.6)] transition-transform ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden ${
+              className={`fixed top-0 right-0 z-60 flex h-dvh w-[min(82vw,320px)] flex-col bg-paper shadow-[-18px_0_50px_-24px_rgba(34,30,26,0.6)] transition-transform ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden ${
                 open
-                  ? "[transform:translateX(0)] duration-[550ms]"
-                  : "[transform:translateX(100%)] duration-300"
+                  ? "transform-[translateX(0)] duration-550"
+                  : "transform-[translateX(100%)] duration-300"
               }`}
             >
               <div
@@ -140,7 +140,7 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
                   type="button"
                   onClick={close}
                   aria-label="Close menu"
-                  className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-ink/70 transition-colors hover:bg-ink/5 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                  className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-ink/70 transition-colors hover:bg-ink/5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
                 >
                   <svg
                     aria-hidden
@@ -167,7 +167,7 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
                     className={`rounded-xl px-3 py-3 font-display text-2xl ${reveal} ${
                       activeId === link.id
                         ? "text-coral-text"
-                        : "text-ink hover:bg-ink/[0.04]"
+                        : "text-ink hover:bg-ink/4"
                     }`}
                   >
                     {link.label}
@@ -185,7 +185,7 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={close}
-                  className="inline-flex items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-semibold text-ink transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                  className="inline-flex items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-semibold text-ink transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
                 >
                   Get directions
                 </a>

@@ -10,7 +10,7 @@ export function Story() {
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-24 sm:px-8 md:py-32 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16 lg:px-10">
         <Reveal
           variant="curtain"
-          className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-35px_rgba(34,30,26,0.5)] ring-1 ring-ink/[0.06] sm:rounded-[2.5rem] lg:aspect-[5/4]"
+          className="relative aspect-4/3 overflow-hidden rounded-4xl shadow-[0_30px_60px_-35px_rgba(34,30,26,0.5)] ring-1 ring-ink/6 sm:rounded-[2.5rem] lg:aspect-5/4"
         >
           <FadeImage
             src={storyImage.src}

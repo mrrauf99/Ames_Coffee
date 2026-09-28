@@ -21,7 +21,7 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-[transform,box-shadow,background-color,border-color,color] duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral";
+    "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-[transform,box-shadow,background-color,border-color,color] duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral";
 
   const variantStyles = {
     // ink on coral clears 4.5:1; cream on coral only reaches 2.9:1, so the fill
@@ -29,7 +29,7 @@ export function Button({
     solid:
       "bg-coral text-ink shadow-[0_1px_2px_rgba(34,30,26,0.16)] hover:shadow-[0_8px_20px_-6px_rgba(200,86,58,0.55)]",
     outline:
-      "border border-ink/20 text-ink hover:border-ink/45 hover:bg-ink/[0.04] hover:shadow-[0_8px_20px_-10px_rgba(34,30,26,0.4)]",
+      "border border-ink/20 text-ink hover:border-ink/45 hover:bg-ink/4 hover:shadow-[0_8px_20px_-10px_rgba(34,30,26,0.4)]",
   } as const;
 
   const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
