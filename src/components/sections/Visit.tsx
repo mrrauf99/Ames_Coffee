@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { business } from "@/data/business";
 import { visitImage } from "@/data/gallery";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { OpenStatusBadge } from "@/components/ui/OpenStatusBadge";
 import { Rose } from "@/components/ui/Rose";
 
@@ -17,6 +17,7 @@ const goodToKnow = [
   business.amenities.seating,
   "Free street parking and a free lot, usually with room to spare",
   "Wheelchair accessible entrance and parking",
+  "Card and tap to pay accepted",
   "Dogs and kids welcome",
 ];
 
@@ -58,10 +59,12 @@ export function Visit() {
             variant="curtain"
             className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-35px_rgba(34,30,26,0.5)] ring-1 ring-ink/[0.06] sm:rounded-[2.5rem] lg:aspect-auto lg:h-full"
           >
-            <Image
+            <FadeImage
               src={visitImage.src}
               alt={visitImage.alt}
               fill
+              placeholder="blur"
+              blurDataURL={visitImage.blurDataURL}
               sizes="(min-width: 1024px) 55vw, 92vw"
               className="object-cover"
             />

@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { business } from "@/data/business";
 import { storyImage } from "@/data/gallery";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { FadeImage } from "@/components/ui/FadeImage";
 
 export function Story() {
   return (
@@ -12,10 +12,12 @@ export function Story() {
           variant="curtain"
           className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-35px_rgba(34,30,26,0.5)] ring-1 ring-ink/[0.06] sm:rounded-[2.5rem] lg:aspect-[5/4]"
         >
-          <Image
+          <FadeImage
             src={storyImage.src}
             alt={storyImage.alt}
             fill
+            placeholder="blur"
+            blurDataURL={storyImage.blurDataURL}
             sizes="(min-width: 1024px) 55vw, 92vw"
             className="object-cover"
           />
