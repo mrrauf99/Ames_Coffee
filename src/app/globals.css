@@ -7,7 +7,10 @@
   --color-paper: #faf6f0;
   --color-coral: #e06b4c;
   --color-coral-dark: #c8563a;
+  /* Same hue/saturation as coral and sage, darkened to clear 4.5:1 on cream — the base tones read at ~2.6-2.9:1 as text. */
+  --color-coral-text: #b23e1f;
   --color-sage: #8c9c5c;
+  --color-sage-text: #5c673d;
   --color-denim: #3e6ca6;
   --color-periwinkle: #a9bad9;
   --color-blush: #f7e0da;
@@ -24,7 +27,9 @@
   --color-paper: var(--color-paper);
   --color-coral: var(--color-coral);
   --color-coral-dark: var(--color-coral-dark);
+  --color-coral-text: var(--color-coral-text);
   --color-sage: var(--color-sage);
+  --color-sage-text: var(--color-sage-text);
   --color-denim: var(--color-denim);
   --color-periwinkle: var(--color-periwinkle);
   --color-blush: var(--color-blush);

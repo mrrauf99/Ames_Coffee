@@ -166,7 +166,7 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
                     style={revealDelay(index + 1)}
                     className={`rounded-xl px-3 py-3 font-display text-2xl ${reveal} ${
                       activeId === link.id
-                        ? "text-coral"
+                        ? "text-coral-text"
                         : "text-ink hover:bg-ink/[0.04]"
                     }`}
                   >
@@ -185,7 +185,7 @@ export function MobileNav({ links, activeId }: { links: NavLink[]; activeId: str
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={close}
-                  className="inline-flex items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-semibold text-cream transition-colors duration-200 hover:bg-coral-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                  className="inline-flex items-center justify-center rounded-full bg-coral px-6 py-3 text-sm font-semibold text-ink transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
                 >
                   Get directions
                 </a>

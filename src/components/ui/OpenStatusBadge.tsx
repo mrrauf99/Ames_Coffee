@@ -44,7 +44,7 @@ export function OpenStatusBadge({ className = "inline-flex" }: { className?: str
   return (
     <span
       className={`items-center gap-2 font-medium ${
-        status.isOpen ? "text-sage" : "text-text-secondary"
+        status.isOpen ? "text-sage-text" : "text-text-secondary"
       } ${className}`}
     >
       <span

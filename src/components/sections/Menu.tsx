@@ -10,12 +10,13 @@ import { Rose } from "@/components/ui/Rose";
 function MenuGroupBlock({ group, delay = 0 }: { group: MenuGroup; delay?: number }) {
   return (
     <Reveal delay={delay}>
+      {/* text-ink on periwinkle clears 4.5:1; white on periwinkle only reached ~2:1. */}
       <div className="flex items-baseline justify-center gap-2 rounded-full bg-periwinkle px-4 py-1.5">
-        <h3 className="font-display text-sm font-semibold lowercase tracking-[0.06em] text-white">
+        <h3 className="font-display text-sm font-semibold lowercase tracking-[0.06em] text-ink">
           {group.title}
         </h3>
         {group.note && (
-          <span className="text-sm font-semibold text-white/85">{group.note}</span>
+          <span className="text-sm font-semibold text-ink/80">{group.note}</span>
         )}
       </div>
 
@@ -117,10 +118,10 @@ export function Menu() {
 
                   <Reveal delay={240}>
                     <div className="flex items-baseline justify-center gap-2 rounded-full bg-periwinkle px-4 py-1.5">
-                      <h3 className="font-display text-sm font-semibold lowercase tracking-[0.06em] text-white">
+                      <h3 className="font-display text-sm font-semibold lowercase tracking-[0.06em] text-ink">
                         Winter add-ons
                       </h3>
-                      <span className="text-sm font-semibold text-white/85">
+                      <span className="text-sm font-semibold text-ink/80">
                         {winterAddOns.price}
                       </span>
                     </div>

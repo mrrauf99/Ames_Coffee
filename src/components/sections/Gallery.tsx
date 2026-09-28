@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { galleryImages } from "@/data/gallery";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { Arrow } from "@/components/ui/Arrow";
 
 // The arrows sit over the rail itself, centred on the slides, so the control is
@@ -31,6 +31,7 @@ export function Gallery() {
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -45,10 +46,11 @@ export function Gallery() {
     ).matches;
     if (prefersReducedMotion) {
       autoplay.stop();
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsPlaying(false);
     }
 
     // emblaApi isn't available during render, so sync selectedIndex here.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
@@ -60,6 +62,18 @@ export function Gallery() {
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  // stopOnMouseEnter only reaches mouse users; this gives keyboard and touch
+  // visitors an explicit, persistent way to stop the auto-advance (WCAG 2.2.2).
+  const toggleAutoplay = useCallback(() => {
+    if (autoplay.isPlaying()) {
+      autoplay.stop();
+      setIsPlaying(false);
+    } else {
+      autoplay.play();
+      setIsPlaying(true);
+    }
+  }, [autoplay]);
 
   function handleKeyDown(event: React.KeyboardEvent) {
     if (event.key === "ArrowLeft") scrollPrev();
@@ -73,7 +87,8 @@ export function Gallery() {
       <div className="mx-auto max-w-6xl px-6 py-24 sm:px-8 md:py-32 lg:px-10">
         <SectionHeading title="A few frames from the window" align="center" />
 
-        <Reveal delay={100} className="mt-12">
+        {/* Shorter than the 900ms default — these photos are usually already loaded by the time this scrolls into view. */}
+        <Reveal delay={100} duration={400} className="mt-12">
           <div
             className="rounded-3xl outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
             tabIndex={0}
@@ -114,11 +129,13 @@ export function Gallery() {
                             : "scale-[0.94] opacity-45"
                         }`}
                       >
-                        <Image
+                        <FadeImage
                           src={image.src}
                           alt={image.alt}
                           fill
-                          loading={index === 0 ? "eager" : "lazy"}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL={image.blurDataURL}
                           sizes="(min-width: 1024px) 42vw, (min-width: 640px) 55vw, 78vw"
                           className="object-cover"
                         />
@@ -130,6 +147,24 @@ export function Gallery() {
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={toggleAutoplay}
+                aria-pressed={isPlaying}
+                aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
+                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-text-secondary transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+              >
+                {isPlaying ? (
+                  <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor">
+                    <rect x="3.5" y="2.5" width="3" height="11" rx="1" />
+                    <rect x="9.5" y="2.5" width="3" height="11" rx="1" />
+                  </svg>
+                ) : (
+                  <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor">
+                    <path d="M4 2.5v11l10-5.5-10-5.5Z" />
+                  </svg>
+                )}
+              </button>
               <div className="h-px w-24 bg-border sm:w-32">
                 <div
                   className="h-px bg-coral transition-all duration-500 ease-out"

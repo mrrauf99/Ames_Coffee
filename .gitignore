@@ -38,3 +38,4 @@ Thumbs.db
 # Project files to discard
 AGENTS.md
 CLAUDE.md
+.impeccable/

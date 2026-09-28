@@ -6,10 +6,12 @@ import { business } from "@/data/business";
 import { heroImage } from "@/data/gallery";
 import { Button } from "@/components/ui/Button";
 import { OpenStatusBadge } from "@/components/ui/OpenStatusBadge";
+import { Rose } from "@/components/ui/Rose";
 
 export function Hero() {
   const frameRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
+  const [imageErrored, setImageErrored] = useState(false);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -61,7 +63,7 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-6xl gap-10 px-6 pt-12 pb-16 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-10 lg:pt-16 lg:pb-24">
         <div className="flex flex-col items-start gap-6">
           <p
-            className="hero-in font-display text-lg italic text-coral"
+            className="hero-in font-display text-lg italic text-coral-text"
             style={{ animationDelay: "60ms" }}
           >
             Albion, Brisbane
@@ -123,14 +125,23 @@ export function Hero() {
             className="relative aspect-[3/4] w-full overflow-hidden rounded-[2rem] bg-sand shadow-[0_30px_60px_-30px_rgba(34,30,26,0.45)] ring-1 ring-ink/[0.06] transition-transform duration-300 ease-out sm:rounded-[2.5rem]"
             style={{ transform: `translateY(${offset}px)` }}
           >
-            <Image
-              src={heroImage.src}
-              alt={heroImage.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 46vw, 92vw"
-              className="object-cover object-center"
-            />
+            {imageErrored ? (
+              <div className="absolute inset-0 flex items-center justify-center bg-sand" role="img" aria-label={heroImage.alt}>
+                <Rose variant="bloom" className="h-10 w-10 opacity-40" />
+              </div>
+            ) : (
+              <Image
+                src={heroImage.src}
+                alt={heroImage.alt}
+                fill
+                priority
+                placeholder="blur"
+                blurDataURL={heroImage.blurDataURL}
+                sizes="(min-width: 1024px) 46vw, 92vw"
+                className="object-cover object-center"
+                onError={() => setImageErrored(true)}
+              />
+            )}
           </div>
         </div>
       </div>

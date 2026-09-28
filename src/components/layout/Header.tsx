@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { business } from "@/data/business";
+import { Button } from "@/components/ui/Button";
 import { OpenStatusBadge } from "@/components/ui/OpenStatusBadge";
 import { useActiveSection } from "@/lib/useActiveSection";
 import { useHeaderState } from "@/lib/useHeaderState";
@@ -49,14 +50,15 @@ export function Header() {
     >
       <div
         // Full-bleed rather than the max-w-6xl the page sections use, so the
-        // wordmark sits in the corner of the bar instead of floating inward.
-        className={`flex w-full items-center justify-between gap-8 px-5 transition-[padding] duration-300 ease-out sm:px-8 lg:gap-12 lg:px-10 ${
+        // wordmark sits in the corner of the bar. Padding swaps instantly
+        // (not transitioned) to avoid animating a layout-reflow property.
+        className={`flex w-full items-center justify-between gap-8 px-5 sm:px-8 lg:gap-12 lg:px-10 ${
           condensed ? "py-3" : "py-5"
         }`}
       >
         <Link
           href="#top"
-          className="font-display text-2xl italic leading-none text-ink transition-colors hover:text-coral"
+          className="font-display text-2xl italic leading-none text-ink transition-colors hover:text-coral-text"
         >
           {business.name}
         </Link>
@@ -70,8 +72,8 @@ export function Header() {
                 linkRefs.current[link.id] = el;
               }}
               aria-current={activeId === link.id ? "page" : undefined}
-              className={`py-1 text-sm font-medium transition-colors ${
-                activeId === link.id ? "text-coral" : "text-ink/75 hover:text-ink"
+              className={`rounded-sm py-1 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral ${
+                activeId === link.id ? "text-coral-text" : "text-ink/75 hover:text-ink"
               }`}
             >
               {link.label}
@@ -100,15 +102,35 @@ export function Header() {
           }`}
         >
           <OpenStatusBadge className="hidden text-sm lg:inline-flex" />
-          <a
-            href={business.googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-cream transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-coral-dark hover:shadow-[0_8px_20px_-6px_rgba(200,86,58,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
-          >
+          <Button href={business.googleMapsUrl} external>
             Get directions
-          </a>
+          </Button>
         </div>
+
+        {/* The condensed-header CTA above is md:flex only, so scrolled mobile
+            visitors would otherwise lose one-tap directions until they open
+            the drawer — this stays visible next to the hamburger instead. */}
+        <a
+          href={business.googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Get directions"
+          className="-mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral md:hidden"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-5 w-5"
+          >
+            <path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="2.75" />
+          </svg>
+        </a>
 
         {/* No room for the inline nav or CTA on small screens; both move into this drawer. */}
         <MobileNav links={NAV_LINKS} activeId={activeId} />
